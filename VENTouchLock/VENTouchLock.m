@@ -5,6 +5,7 @@
 #import "UIViewController+VENTouchLock.h"
 
 static NSString *const VENTouchLockUserDefaultsKeyTouchIDActivated = @"VENTouchLockUserDefaultsKeyTouchIDActivated";
+static NSString *const VENTouchLockUserDefaultsKeyAutoLockActivated = @"VENTouchLockUserDefaultsKeyAutoLockActivated";
 
 @interface VENTouchLock ()
 
@@ -120,6 +121,17 @@ static NSString *const VENTouchLockUserDefaultsKeyTouchIDActivated = @"VENTouchL
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++ (BOOL)shouldAutoLock
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:VENTouchLockUserDefaultsKeyAutoLockActivated];
+}
+
++ (void)setShouldAutoLock:(BOOL)shouldAutoLock
+{
+    [[NSUserDefaults standardUserDefaults] setBool:shouldAutoLock forKey:VENTouchLockUserDefaultsKeyAutoLockActivated];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)requestTouchIDWithCompletion:(void (^)(VENTouchLockTouchIDResponse))completionBlock
 {
     [self requestTouchIDWithCompletion:completionBlock reason:self.touchIDReason];
@@ -222,12 +234,14 @@ static NSString *const VENTouchLockUserDefaultsKeyTouchIDActivated = @"VENTouchL
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    [self lock];
+    if([VENTouchLock shouldAutoLock]) {
+        [self lock];
+    }
 }
 
 - (void)applicationDidEnterBackground:(NSNotification *)notification
 {
-    if (!self.backgroundLockVisible) {
+    if (!self.backgroundLockVisible && [VENTouchLock shouldAutoLock]) {
         [self lock];
     }
 }
