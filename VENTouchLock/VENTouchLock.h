@@ -78,6 +78,16 @@ typedef NS_ENUM(NSUInteger, VENTouchLockTouchIDResponse) {
 + (void)setShouldUseTouchID:(BOOL)shouldUseTouchID;
 
 /**
+ Returns YES if app should auto lock, and NO otherwise.
+ */
++ (BOOL)shouldAutoLock;
+
+/**
+ Sets and persists if app should auto lock
+ */
++ (void)setShouldAutoLock:(BOOL)shouldAutoLock;
+
+/**
  Requests a TouchID if possible. If canUseTouchID returns NO, this method does nothing. The displayed string on the touch id prompt will be the default touchIDReason.
  */
 - (void)requestTouchIDWithCompletion:(void(^)(VENTouchLockTouchIDResponse response))completionBlock;
