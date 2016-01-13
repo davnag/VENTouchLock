@@ -143,7 +143,7 @@
                       unlockType:(VENTouchLockSplashViewControllerUnlockType)unlockType
                         animated:(BOOL)animated
 {
-    [self.presentingViewController dismissViewControllerAnimated:animated completion:^{
+    [self dismissViewControllerAnimated:animated completion:^{
         if (self.didFinishWithSuccess) {
             self.didFinishWithSuccess(success, unlockType);
         }
