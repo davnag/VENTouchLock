@@ -143,11 +143,20 @@
                       unlockType:(VENTouchLockSplashViewControllerUnlockType)unlockType
                         animated:(BOOL)animated
 {
-    [self dismissViewControllerAnimated:animated completion:^{
-        if (self.didFinishWithSuccess) {
-            self.didFinishWithSuccess(success, unlockType);
-        }
-    }];
+    
+    if(success || unlockType != VENTouchLockSplashViewControllerUnlockTypeNone) {
+        [self.presentingViewController dismissViewControllerAnimated:animated completion:^{
+            if (self.didFinishWithSuccess) {
+                self.didFinishWithSuccess(success, unlockType);
+            }
+        }];
+    }else {
+        [self dismissViewControllerAnimated:animated completion:^{
+            if (self.didFinishWithSuccess) {
+                self.didFinishWithSuccess(success, unlockType);
+            }
+        }];
+    }
 }
 
 - (void)initialize
