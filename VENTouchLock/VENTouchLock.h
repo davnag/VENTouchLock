@@ -110,6 +110,11 @@ typedef NS_ENUM(NSUInteger, VENTouchLockTouchIDResponse) {
 - (void)lock;
 
 /**
+ Set Should supress lock one
+ */
++ (void)supressLockOnce;
+
+/**
  @return The proxy for the receiver's user interface. Custom appearance preferences may optionally be set by editing the returned instance's properties.
  */
 - (VENTouchLockAppearance *)appearance;

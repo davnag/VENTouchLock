@@ -2,6 +2,8 @@
 #import "VENTouchLockEnterPasscodeViewController.h"
 #import "VENTouchLock.h"
 
+NSString *const VENTouchLockSplashViewControllerSupressShowUnlockAnimated = @"VENTouchLockSplashViewControllerSupressShowUnlockAnimated";
+
 @interface VENTouchLockSplashViewController ()
 @property (nonatomic, assign) BOOL isSnapshotViewController;
 @end
@@ -68,16 +70,39 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
+#pragma mark - Supress Show Unlock Animated
+
++ (void)resetSupressShowUnlockAnimated
+{
+    NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+    [standardDefaults removeObjectForKey:VENTouchLockSplashViewControllerSupressShowUnlockAnimated];
+    [standardDefaults synchronize];
+}
+
++ (void)supressShowUnlockAnimatedOnce {
+    NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+    [standardDefaults setBool:YES forKey:VENTouchLockSplashViewControllerSupressShowUnlockAnimated];
+    [standardDefaults synchronize];
+}
+
++ (BOOL)shouldSupressShowUnlockAnimatedOnce {
+    NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+    return [standardDefaults boolForKey:VENTouchLockSplashViewControllerSupressShowUnlockAnimated];
+}
 
 #pragma mark - Present unlock methods
 
 - (void)showUnlockAnimated:(BOOL)animated
 {
-    if ([VENTouchLock shouldUseTouchID]) {
-        [self showTouchID];
-    }
-    else {
-        [self showPasscodeAnimated:animated];
+    if([VENTouchLockSplashViewController shouldSupressShowUnlockAnimatedOnce] == false) {
+        if ([VENTouchLock shouldUseTouchID]) {
+            [self showTouchID];
+        }
+        else {
+            [self showPasscodeAnimated:animated];
+        }
+    }else {
+        [VENTouchLockSplashViewController resetSupressShowUnlockAnimated];
     }
 }
 

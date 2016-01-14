@@ -101,6 +101,9 @@ static NSString *const VENTouchLockUserDefaultsKeyAutoLockActivated = @"VENTouch
     [SSKeychain deletePasswordForService:service account:account];
 }
 
++ (void)supressLockOnce {
+    [VENTouchLockSplashViewController supressShowUnlockAnimatedOnce];
+}
 
 #pragma mark - TouchID Methods
 

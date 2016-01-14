@@ -66,9 +66,10 @@ NSString *const VENTouchLockEnterPasscodeUserDefaultsKeyNumberOfConsecutivePassc
 
 - (void)callExceededLimitActionBlock
 {
+    [VENTouchLockEnterPasscodeViewController resetPasscodeAttemptHistory];
     [[self parentSplashViewController] dismissWithUnlockSuccess:NO
                                                      unlockType:VENTouchLockSplashViewControllerUnlockTypeNone
-                                                       animated:NO];
+                                                       animated:YES];
 }
 
 - (VENTouchLockSplashViewController *)parentSplashViewController
