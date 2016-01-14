@@ -20,6 +20,10 @@ typedef NS_ENUM(NSUInteger, VENTouchLockTouchIDResponse) {
 @property (assign, nonatomic) BOOL backgroundLockVisible;
 
 /**
+ YES if the app is locked */
+@property (assign, nonatomic) BOOL isAppLocked;
+
+/**
  @return A singleton VENTouchLock instance.
  */
 + (instancetype)sharedInstance;
