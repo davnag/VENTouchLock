@@ -54,6 +54,7 @@ NSString *const VENTouchLockSplashViewControllerSupressShowUnlockAnimated = @"VE
     if (!self.isSnapshotViewController) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self showUnlockAnimated:NO];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
         });
     }
 }
@@ -61,13 +62,12 @@ NSString *const VENTouchLockSplashViewControllerSupressShowUnlockAnimated = @"VE
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+
 }
 
 #pragma mark - Supress Show Unlock Animated
