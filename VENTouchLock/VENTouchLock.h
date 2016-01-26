@@ -12,6 +12,9 @@ typedef NS_ENUM(NSUInteger, VENTouchLockTouchIDResponse) {
     VENTouchLockTouchIDResponsePromptAlreadyPresent,
 };
 
+static NSString *const VENTouchLockDidUnlockApp = @"VENTouchLockDidUnlockApp";
+static NSString *const VENTouchLockDidLockApp = @"VENTouchLockDidLockApp";
+
 @interface VENTouchLock : NSObject
 
 /**

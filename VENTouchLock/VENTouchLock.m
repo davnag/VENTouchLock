@@ -197,6 +197,8 @@ static NSString *const VENTouchLockUserDefaultsKeyAutoLockActivated = @"VENTouch
         
         [[VENTouchLock sharedInstance] setIsAppLocked:YES];
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:VENTouchLockDidLockApp object:nil];
+        
         VENTouchLockSplashViewController *splashViewController = [[self.splashViewControllerClass alloc] init];
         if ([splashViewController isKindOfClass:[VENTouchLockSplashViewController class]]) {
             UIWindow *mainWindow = [[UIApplication sharedApplication].windows firstObject];

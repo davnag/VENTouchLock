@@ -171,6 +171,7 @@ NSString *const VENTouchLockSplashViewControllerSupressShowUnlockAnimated = @"VE
     
     if(success || unlockType != VENTouchLockSplashViewControllerUnlockTypeNone) {
         [[VENTouchLock sharedInstance] setIsAppLocked:NO];
+        [[NSNotificationCenter defaultCenter] postNotificationName:VENTouchLockDidUnlockApp object:nil];
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         self.presentingViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         [self.presentingViewController dismissViewControllerAnimated:animated completion:^{
