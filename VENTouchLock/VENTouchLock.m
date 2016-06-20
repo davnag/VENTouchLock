@@ -6,6 +6,7 @@
 
 static NSString *const VENTouchLockUserDefaultsKeyTouchIDActivated = @"VENTouchLockUserDefaultsKeyTouchIDActivated";
 static NSString *const VENTouchLockUserDefaultsKeyAutoLockActivated = @"VENTouchLockUserDefaultsKeyAutoLockActivated";
+static NSString *const VENTouchLockUserDefaultsKeyAppLocked = @"VENTouchLockUserDefaultsKeyAppLocked";
 
 @interface VENTouchLock ()
 
@@ -51,13 +52,18 @@ static NSString *const VENTouchLockUserDefaultsKeyAutoLockActivated = @"VENTouch
 
 -(BOOL) isAppLocked
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"ISAPPLOCKEDTEST"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:VENTouchLockUserDefaultsKeyAppLocked];
 }
 
 - (void) isAppLocked: (BOOL) isLocked
 {
-    [[NSUserDefaults standardUserDefaults] setBool:isLocked forKey:@"ISAPPLOCKEDTEST"];
+    [[NSUserDefaults standardUserDefaults] setBool:isLocked forKey:VENTouchLockUserDefaultsKeyAppLocked];
     _isAppLocked = isLocked;
+}
+
++(BOOL) isAppLockedByUser
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:VENTouchLockUserDefaultsKeyAppLocked];
 }
 
 - (void)setKeychainService:(NSString *)service
@@ -253,14 +259,14 @@ static NSString *const VENTouchLockUserDefaultsKeyAutoLockActivated = @"VENTouch
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-    if([VENTouchLock shouldAutoLock]) {
+    if([VENTouchLock shouldAutoLock] || [VENTouchLock isAppLockedByUser]) {
         [self lock];
     }
 }
 
 - (void)applicationDidEnterBackground:(NSNotification *)notification
 {
-    if (!self.backgroundLockVisible && [VENTouchLock shouldAutoLock]) {
+    if (!self.backgroundLockVisible && ([VENTouchLock shouldAutoLock] || [VENTouchLock isAppLockedByUser])) {
         [self lock];
     }
 }
