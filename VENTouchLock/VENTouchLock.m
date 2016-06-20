@@ -49,6 +49,17 @@ static NSString *const VENTouchLockUserDefaultsKeyAutoLockActivated = @"VENTouch
     return self;
 }
 
+-(BOOL) isAppLocked
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"ISAPPLOCKEDTEST"];
+}
+
+- (void) isAppLocked: (BOOL) isLocked
+{
+    [[NSUserDefaults standardUserDefaults] setBool:isLocked forKey:@"ISAPPLOCKEDTEST"];
+    _isAppLocked = isLocked;
+}
+
 - (void)setKeychainService:(NSString *)service
            keychainAccount:(NSString *)account
              touchIDReason:(NSString *)reason
