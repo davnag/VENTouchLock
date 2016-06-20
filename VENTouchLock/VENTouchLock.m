@@ -55,10 +55,9 @@ static NSString *const VENTouchLockUserDefaultsKeyAppLocked = @"VENTouchLockUser
     return [[NSUserDefaults standardUserDefaults] boolForKey:VENTouchLockUserDefaultsKeyAppLocked];
 }
 
-- (void) isAppLocked: (BOOL) isLocked
+- (void) setIsAppLocked: (BOOL) isLocked
 {
     [[NSUserDefaults standardUserDefaults] setBool:isLocked forKey:VENTouchLockUserDefaultsKeyAppLocked];
-    _isAppLocked = isLocked;
 }
 
 +(BOOL) isAppLockedByUser
